@@ -362,3 +362,6 @@ select.champ { appearance: auto; }
 .cc-auto { font: 900 22px var(--font); color: var(--violet); min-width: 76px; text-align: center; padding-top: 6px; }
 .lien-moy { display: inline-block; margin-top: 8px; font: 700 13px var(--font); color: var(--violet); }
 #moyCC { margin-top: 14px; } #moyCC .petit + .petit { margin-top: 6px; }
+.moy-lien { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
+.moy-lien .titre-c { font: 800 20px var(--font); color: var(--lilas-f); margin: 6px 0 4px; letter-spacing: -.4px; }
+.moy-lien > .ico { color: var(--lilas-f); flex: none; }

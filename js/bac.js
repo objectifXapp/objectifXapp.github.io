@@ -88,6 +88,9 @@ VIEWS.monbac = () => {
       <div class="gros-b">${b.viser === null ? virgule(b.moyenne ?? 0) : b.viser <= 0 ? 'Acquis' : b.viser > 20 ? '> 20' : virgule(b.viser)}</div>
       <div class="petit">${b.rempli ? `Pour finir à ${b.vise} de moyenne. Notes entrées : ${b.rempli} coefficients sur ${b.total}.` : `Pour avoir ${b.vise} de moyenne générale. Entre tes notes en dessous pour un calcul précis.`}</div>
       <div class="puces sombre">${[10, 12, 14, 16].map(v => `<button class="${b.vise === v ? 'choisi' : ''}" data-act="vise" data-x="${v}">${v === 10 ? 'Le bac' : v === 12 ? 'Assez bien' : v === 14 ? 'Bien' : 'Très bien'}</button>`).join('')}</div></div>
+    <a class="case lilas moy-lien" href="#moyennes"><div><div class="eti">Mes moyennes de terminale</div>
+      ${b.auto ? `<div class="gros">${virgule(b.auto.note)}</div><div class="petit">Contrôle continu de l'année. Touche pour entrer un nouveau bulletin.</div>` : '<div class="titre-c">Entrer mes bulletins</div><div class="petit">Trimestre par trimestre : l’app calcule ton contrôle continu et ce qu’il te faut dans chaque matière.</div>'}</div>
+      ${ico('fleche', 22)}</a>
     ${b.rempli ? `<div class="case simu-moy"><div><div class="eti">Ta moyenne avec ces notes</div><div class="gros">${virgule(b.moyenne)}</div></div>
       <div class="petit">${b.blancs ? `Dont ${pluriel(b.blancs, 'note de bac blanc', 'notes de bac blanc')} : c'est une estimation, pas une note sûre.` : 'Calculée sur les notes entrées seulement.'}</div></div>` : ''}
     <div class="simu-l">${b.eps.map(e => {
@@ -101,7 +104,6 @@ VIEWS.monbac = () => {
     <h2 class="sec">Se préparer</h2>
     <div class="outils">
       ${mesEpreuves().includes('grand-oral') ? `<a href="#grandoral">${ico('chrono', 20)}<span>Préparer le grand oral</span></a>` : ''}
-      <a href="#moyennes">${ico('liste', 20)}<span>Mes moyennes</span></a>
       <a href="#jourj">${ico('ok', 20)}<span>La liste du jour J</span></a>
       <a href="#planning">${ico('calendrier', 20)}<span>Mon planning</span></a>
     </div>
