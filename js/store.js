@@ -7,6 +7,7 @@ export const VERSION = 1;
 const neuf = () => ({
   v: VERSION, cree: today(), voie: null, spes: [], options: [], lv: [], prenom: '', jours: [5], duree: 45,
   lu: {}, srs: {}, quiz: {}, erreurs: {}, methode: {}, sujets: {}, seances: [], seance: null, notes: {}, blanc: {}, vus: {}, theme: 'auto', heure: 18, go: { q: ['', ''] }, jourj: {},
+  moy: { n: 3, m: {} },
 });
 
 export let state = charger();
@@ -224,9 +225,35 @@ export function chapitreSuivant(matId) {
 
 // ---------- Simulateur ----------
 // notes : { id: note sur 20 }. On compte les points acquis et la moyenne à viser sur ce qui reste.
-export function bilan() {
+// Mes moyennes : les matières du contrôle continu de terminale et leur poids (19 en tout).
+export function matieresCC() {
+  const g = (state.voie || 'generale') === 'generale', lv = k => state.lv[k] ? ` (${NOMS[state.lv[k]]})` : '';
+  return [
+    { id: 'hg', nom: 'Histoire-géographie', coef: 3 }, { id: 'lva', nom: 'Langue vivante A' + lv(0), coef: 3 },
+    { id: 'lvb', nom: 'Langue vivante B' + lv(1), coef: 3 }, { id: 'sci', nom: g ? 'Enseignement scientifique' : 'Mathématiques', coef: 3 },
+    { id: 'eps', nom: 'Éducation physique et sportive', coef: 6 }, { id: 'emc', nom: 'Enseignement moral et civique', coef: 1 },
+  ];
+}
+export const periodes = id => (state.moy.m[id] || []).slice(0, state.moy.n);
+export function moyAnnee(id) {
+  const l = periodes(id).filter(x => typeof x === 'number');
+  return l.length ? l.reduce((a, x) => a + x, 0) / l.length : null;
+}
+// Contrôle continu de terminale calculé depuis les moyennes entrées (null si aucune).
+export function ccMoyennes() {
+  let s = 0, c = 0, complet = true;
+  for (const m of matieresCC()) {
+    const a = moyAnnee(m.id);
+    if (a !== null) { s += a * m.coef; c += m.coef; }
+    if (periodes(m.id).filter(x => typeof x === 'number').length < state.moy.n) complet = false;
+  }
+  return c ? { note: s / c, complet } : null;
+}
+
+export function bilan(sansCC2 = false) {
   const spes = state.spes.filter(id => !RATTACHE[id]).map(id => NOMS[id]);
-  const eps = coefs(state.voie || 'generale', spes).map(e => ({ ...e, note: state.notes[e.id] }));
+  const auto = ccMoyennes();
+  const eps = coefs(state.voie || 'generale', spes).map(e => ({ ...e, note: e.id === 'cc2' ? (sansCC2 ? undefined : auto ? auto.note : state.notes.cc2) : state.notes[e.id] }));
   let acquis = 0, reste = 0;
   for (const e of eps) { if (typeof e.note === 'number') acquis += e.note * e.coef; else reste += e.coef; }
   const total = eps.reduce((s, e) => s + e.coef, 0);
@@ -235,6 +262,6 @@ export function bilan() {
   const moyenne = total - reste ? acquis / (total - reste) : null;
   // notes de bac blanc : celles marquées comme telles (par défaut, les épreuves de juin)
   const passees = ['fr-e', 'fr-o', 'maths-a', 'cc1'];
-  const blancs = eps.filter(e => typeof e.note === 'number' && (state.blanc[e.id] ?? !passees.includes(e.id))).length;
-  return { eps, acquis, reste, total, viser, moyenne, blancs, vise: state.notes.vise ?? 10, rempli: total - reste };
+  const blancs = eps.filter(e => typeof e.note === 'number' && (e.id === 'cc2' && auto ? !auto.complet : (state.blanc[e.id] ?? !passees.includes(e.id)))).length;
+  return { eps, acquis, reste, total, viser, moyenne, blancs, vise: state.notes.vise ?? 10, rempli: total - reste, auto };
 }

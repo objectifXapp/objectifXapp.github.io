@@ -14,7 +14,7 @@ import { apresRecherche, dansUneApp, installee } from './outils.js';
 const APP = document.getElementById('app');
 const ONGLETS = [['', 'home', 'Accueil'], ['reviser', 'livre', 'Réviser'], ['seance', 'play', ''], ['progres', 'barres', 'Progrès'], ['monbac', 'cible', 'Mon bac']];
 const ONGLET_DE = { mat: 'reviser', chap: 'reviser', fiche: 'reviser', cartes: 'reviser', quiz: 'reviser', methode: 'reviser', sujet: 'reviser', epreuve: 'reviser',
-  recherche: 'reviser', lexique: 'reviser', essentiel: 'reviser', planning: 'seance', grandoral: 'monbac', jourj: 'monbac', reglages: '', installer: '' };
+  recherche: 'reviser', lexique: 'reviser', essentiel: 'reviser', planning: 'seance', grandoral: 'monbac', jourj: 'monbac', moyennes: 'monbac', reglages: '', installer: '' };
 
 function render() {
   const [v, ...rest] = location.hash.slice(1).split('/');
