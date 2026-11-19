@@ -308,6 +308,7 @@ VIEWS.reglages = () => {
       <button class="bouton danger" data-act="toutEffacer">Tout effacer</button></div>
     <h2 class="sec">À propos</h2>
     <div class="carte-texte"><p>Objectif X est gratuit, sans publicité et sans compte. Les chapitres suivent les programmes officiels de terminale. Les coefficients et les dates sont ceux connus pour la session 2027.</p></div>
+    <p class="signature">Fait par tim037</p>
   </div>`;
 };
 Object.assign(ACTIONS, {
