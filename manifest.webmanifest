@@ -1,0 +1,17 @@
+{
+  "name": "Objectif X",
+  "short_name": "Objectif X",
+  "description": "Réviser le bac, gratuitement : fiches, cartes, quiz et séances guidées pour toutes les terminales.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F3F1EC",
+  "theme_color": "#F3F1EC",
+  "icons": [
+    { "src": "icones/icone-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icones/icone-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icones/icone-masquable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

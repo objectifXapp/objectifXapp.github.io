@@ -1,0 +1,6 @@
+# Outils de travail : ne partent pas en ligne
+contenu/CONSIGNES.md
+contenu/MATIERES.md
+contenu/verifier.mjs
+sources/
+*.tmp
