@@ -1,5 +1,5 @@
 // Point d'entrée : aiguillage des écrans, barre du bas, premier lancement (surligneur), accueil, réglages.
-import { VIEWS, ACTIONS, ico, esc, toast, fenetre, fermer, pluriel, virgule } from './ui.js';
+import { VIEWS, ACTIONS, ico, esc, toast, fenetre, fermer, pluriel, virgule, lienProbleme } from './ui.js';
 import { VOIES, SERIES, SPES_GENERALE, OPTIONS_GENERALE, LANGUES, NOMS, JOURS, DATES } from './data.js';
 import {
   state, save, remplacer, effacer, today, diff, jourSemaine, chargerTout, CONTENU, dues, matiereSuivante, chapitreSuivant,
@@ -307,7 +307,9 @@ VIEWS.reglages = () => {
       <label class="bouton">Reprendre depuis un fichier<input type="file" accept=".json,application/json" data-ch="importer" hidden></label>
       <button class="bouton danger" data-act="toutEffacer">Tout effacer</button></div>
     <h2 class="sec">À propos</h2>
-    <div class="carte-texte"><p>Objectif X est gratuit, sans publicité et sans compte. Les chapitres suivent les programmes officiels de terminale. Les coefficients et les dates sont ceux connus pour la session 2027.</p></div>
+    <div class="carte-texte"><p>Objectif X est gratuit, sans publicité et sans compte. Les chapitres suivent les programmes officiels de terminale. Les coefficients et les dates sont ceux connus pour la session 2027.</p>
+      <p>Un bug, une erreur dans un cours, une idée ? Écris-nous, on lit tout.</p>
+      ${lienProbleme(VOIES.find(v => v.id === state.voie)?.nom || '')}</div>
     <p class="signature">Fait par tim037</p>
   </div>`;
 };

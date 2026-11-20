@@ -92,6 +92,21 @@ export function tete(titre, retour = '#reviser', sur = '') {
 }
 export const barre = (x, cls = '') => `<div class="barre ${cls}"><i style="width:${Math.round(Math.min(1, x) * 100)}%"></i></div>`;
 
+// Un problème ou une idée sur l'app en général : le mail note le téléphone et le navigateur pour aider à corriger.
+export function lienProbleme(voie = '') {
+  if (!CONTACT) return '';
+  const ua = navigator.userAgent;
+  const tel = /iPhone|iPad/.test(ua) ? 'iPhone' : /Android/.test(ua) ? 'Android' : /Windows/.test(ua) ? 'PC Windows' : /Mac/.test(ua) ? 'Mac' : 'autre';
+  const nav = /CriOS|Chrome/.test(ua) ? 'Chrome' : /Firefox|FxiOS/.test(ua) ? 'Firefox' : /Safari/.test(ua) ? 'Safari' : 'autre';
+  const appli = matchMedia('(display-mode: standalone)').matches || navigator.standalone ? 'oui' : 'non';
+  const corps = encodeURIComponent(`Ce qui ne va pas, ou ton idée :
+
+
+---
+Téléphone : ${tel} · navigateur : ${nav} · app installée : ${appli}${voie ? ' · voie : ' + voie : ''}`);
+  return `<a class="bouton" href="mailto:${CONTACT}?subject=${encodeURIComponent('Objectif X : problème ou idée')}&body=${corps}">${ico('erreur', 18)} Signaler un problème ou une idée</a>`;
+}
+
 // ---------- Signaler une erreur ----------
 // Le bouton n'apparaît que si une adresse de contact est réglée dans data.js.
 export function lienSignaler(ou, texte) {

@@ -116,6 +116,7 @@ VIEWS.fiche = chapId => {
   const c = chapitre(chapId);
   return `<div class="page">${tete('La fiche', '#chap/' + chapId, `${nom(c.mat.id)} · chapitre ${c.n}`)}
     ${rendreFiche(chapId)}
+    ${lienSignaler(`${nom(c.mat.id)}, fiche du chapitre ${c.n}`, c.t)}
     <button class="bouton plein" data-act="lu" data-x="${chapId}">${state.lu[chapId] ? 'Déjà lue' : 'J\'ai lu la fiche'} ${ico('ok', 18)}</button></div>`;
 };
 ACTIONS.lu = el => { state.lu[el.dataset.x] = today(); save(); location.hash = '#chap/' + el.dataset.x; };
