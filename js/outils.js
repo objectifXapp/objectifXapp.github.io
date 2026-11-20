@@ -262,7 +262,7 @@ VIEWS.installer = () => {
   return `<div class="page">${tete('Installer l\'app', '#reglages', 'Sur ton téléphone')}
     <div class="carte-texte">${etapes}</div>
     <h2 class="sec">Pourquoi l'installer</h2>
-    <ul class="jury"><li>Elle s'ouvre d'un geste, comme une vraie app.</li><li>Elle marche sans internet, même en mode avion.</li><li>Tes progrès restent sur ton téléphone : pas de compte, rien n'est envoyé.</li></ul>
+    <ul class="jury"><li>Elle s'ouvre d'un geste, comme une vraie app.</li><li>Elle marche sans internet, même en mode avion.</li><li>Tes progrès restent sur ton téléphone, sans compte.</li></ul>
     <h2 class="sec">Les rappels</h2>
     <div class="carte-texte"><p>Ajoute tes séances à l'agenda de ton téléphone : il te prévient à l'heure choisie, chaque jour de révision.</p>
       <button class="bouton" data-act="agenda">${ico('calendrier', 18)} Ajouter mes séances à mon agenda</button></div>

@@ -302,7 +302,7 @@ VIEWS.reglages = () => {
       <div class="puces">${[['auto', 'Comme le téléphone'], ['clair', 'Clair'], ['sombre', 'Sombre']].map(([k, n]) => `<button class="${state.theme === k ? 'choisi' : ''}" data-act="theme" data-x="${k}">${n}</button>`).join('')}</div>
       <a class="bouton" href="#installer">${ico('telephone', 18)} Installer l'app sur mon téléphone</a></div>
     <h2 class="sec">Mes données</h2>
-    <div class="carte-texte"><p>Tout reste sur ce téléphone : pas de compte, rien n'est envoyé. Pour changer de téléphone, enregistre un fichier puis ouvre-le sur le nouveau.</p>
+    <div class="carte-texte"><p>Tes révisions et tes notes restent sur ce téléphone : pas de compte, rien n'est envoyé à part un compteur de visites anonyme (le nombre d'ouvertures de l'app, sans cookie ni info sur toi). Pour changer de téléphone, enregistre un fichier puis ouvre-le sur le nouveau.</p>
       <button class="bouton" data-act="exporter">Enregistrer mes données dans un fichier</button>
       <label class="bouton">Reprendre depuis un fichier<input type="file" accept=".json,application/json" data-ch="importer" hidden></label>
       <button class="bouton danger" data-act="toutEffacer">Tout effacer</button></div>
