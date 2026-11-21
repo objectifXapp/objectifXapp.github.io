@@ -128,7 +128,7 @@ button:disabled { opacity: .4; cursor: default; }
 .tab a { color: #8A8894; font: 700 10.5px var(--font); display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; width: 58px; }
 .tab a.on { color: #fff; } .tab a.on:not(.centre)::after { content: ''; position: absolute; bottom: -8px; width: 4px; height: 4px; border-radius: 2px; background: var(--violet); }
 .tab .centre { width: 52px; height: 52px; border-radius: 26px; background: var(--violet); color: #fff; display: grid; place-items: center; box-shadow: 0 6px 16px rgba(115,87,224,.35); }
-.tab .logo-pc, .tab .lab-pc { display: none; }
+.tab .logo-pc, .tab .lab-pc, .pc-seul { display: none; }
 .pastille-s { position: absolute; top: 2px; right: 2px; width: 10px; height: 10px; border-radius: 5px; background: var(--blanc); border: 2px solid var(--violet); }
 
 /* ---------- Fiche ---------- */
@@ -392,6 +392,14 @@ select.champ { appearance: auto; }
 
   body:not(.bienvenue) .haut .logo { visibility: hidden; }
   .bento { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .pc-seul { display: block; }
+  .accueil .bento > .case.large:last-child { grid-column: 1 / -1; }
+  .rapides { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .rapides > * { background: var(--blanc); border: 0; border-radius: 22px; padding: 18px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; color: inherit; font: inherit; cursor: pointer; transition: transform .15s, background .15s; }
+  .rapides > *:hover { transform: translateY(-2px); }
+  .rapides .ico { color: var(--violet); margin-bottom: 10px; }
+  .rapides b { font-size: 15px; }
+  .rapides span { font-size: 13px; opacity: .6; }
   .liste { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .outils { grid-template-columns: repeat(4, 1fr); }
   .page:has(.flash), .page:has(.choix), .page:has(.fiche) { max-width: 860px; }

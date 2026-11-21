@@ -1,7 +1,7 @@
 // Cache hors ligne d'Objectif X (https seulement). À chaque publication : augmenter VERSION, et tenir FILES à jour.
 // Les fichiers de contenu (une matière par fichier) sont gardés au premier chargement : l'élève n'en télécharge
 // que pour ses matières. La police est gardée à part, d'une version à l'autre.
-const VERSION = 'objx-7';
+const VERSION = 'objx-8';
 const POLICES = 'objx-polices';
 const FILES = [
   './', 'index.html', 'manifest.webmanifest', 'css/app.css',

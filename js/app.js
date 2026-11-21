@@ -4,7 +4,7 @@ import { VOIES, SERIES, SPES_GENERALE, OPTIONS_GENERALE, LANGUES, NOMS, JOURS, D
 import {
   state, save, remplacer, effacer, today, diff, jourSemaine, chargerTout, CONTENU, dues, matiereSuivante, chapitreSuivant,
   chapitre, seancesSemaine, objectifSemaine, serie, seancesRestantes, prochainJour, bilan, lundi, addDays,
-  aRattraper, mesEpreuves, avancementMatiere,
+  aRattraper, mesEpreuves, avancementMatiere, questionsErreurs,
 } from './store.js';
 import { nom, refresh, INPUTS, CHANGES } from './reviser.js';
 import './seance.js';
@@ -77,8 +77,22 @@ VIEWS.accueil = () => {
         <div class="points">${sem.map(c => `<i class="${c}"></i>`).join('')}</div>
         <div class="petit">Cette semaine : ${fait} sur ${pluriel(obj, 'séance', 'séances')}.</div></a>
     </div>
+    ${accesRapides()}
   </div>`;
 };
+// Sur ordinateur seulement (caché sur téléphone par le CSS) : de gros boutons vers ce qui sert le plus.
+function accesRapides() {
+  const ne = questionsErreurs().length, l = [];
+  l.push(`<button data-act="express">${ico('eclair', 22)}<b>Révision express</b><span>10 cartes et 5 questions</span></button>`);
+  l.push(`<a href="#quiz/erreurs">${ico('erreur', 22)}<b>Mes erreurs</b><span>${ne ? pluriel(ne, 'question à refaire', 'questions à refaire') : 'aucune à refaire'}</span></a>`);
+  l.push(`<a href="#recherche">${ico('loupe', 22)}<b>Rechercher</b><span>une notion, un auteur · Ctrl+K</span></a>`);
+  l.push(`<a href="#planning">${ico('calendrier', 22)}<b>Mon planning</b><span>toutes mes séances jusqu’au bac</span></a>`);
+  l.push(`<a href="#moyennes">${ico('barres', 22)}<b>Mes moyennes</b><span>bulletins de terminale</span></a>`);
+  if (mesEpreuves().includes('grand-oral')) l.push(`<a href="#grandoral">${ico('chrono', 22)}<b>Grand oral</b><span>préparer mes questions</span></a>`);
+  l.push(`<a href="#jourj">${ico('ok', 22)}<b>Le jour J</b><span>la liste à préparer</span></a>`);
+  l.push(`<a href="#reglages">${ico('reglages', 22)}<b>Réglages</b><span>matières, jours, sauvegarde</span></a>`);
+  return `<div class="pc-seul"><h2 class="sec">Accès rapides</h2><div class="rapides">${l.join('')}</div></div>`;
+}
 // Les autres comptes à rebours, en petit sous le grand chiffre.
 function comptes() {
   const t = today(), l = [];
