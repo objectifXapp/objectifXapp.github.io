@@ -38,8 +38,8 @@ window.addEventListener('refresh', () => { const y = scrollY; render(); scrollTo
 window.addEventListener('hashchange', () => { render(); scrollTo(0, 0); });
 
 function barreBas(actif) {
-  return `<nav class="tab">${ONGLETS.map(([h, i, t]) => h === 'seance'
-    ? `<a href="#seance" class="centre ${actif === 'seance' ? 'on' : ''}" aria-label="Séance">${ico('play', 20)}${state.seance ? '<i class="pastille-s"></i>' : ''}</a>`
+  return `<nav class="tab"><a href="#" class="logo-pc">Objectif <i>X</i></a>${ONGLETS.map(([h, i, t]) => h === 'seance'
+    ? `<a href="#seance" class="centre ${actif === 'seance' ? 'on' : ''}" aria-label="Séance">${ico('play', 20)}<span class="lab-pc">${state.seance ? 'Reprendre la séance' : 'Séance du jour'}</span>${state.seance ? '<i class="pastille-s"></i>' : ''}</a>`
     : `<a href="#${h}" class="${actif === h ? 'on' : ''}">${ico(i)}<span>${t}</span></a>`).join('')}</nav>`;
 }
 

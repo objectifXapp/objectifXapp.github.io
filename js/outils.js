@@ -55,6 +55,18 @@ document.addEventListener('keydown', e => {
     e.preventDefault(); location.hash = '#recherche';
   }
 });
+// Sur ordinateur : Espace retourne la carte, 1 2 3 la notent, 1 à 4 (ou A à D) répondent au quiz, Entrée passe à la suite.
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey || /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) || document.querySelector('.voile')) return;
+  const q = s => document.querySelector(s), k = e.key.toLowerCase();
+  let b = null;
+  if (k === ' ' || k === 'enter') b = q('.flash:not(.retourne)') || q('[data-act="questionSuivante"]');
+  else if (/^[1-4]$/.test(k) || /^[a-d]$/.test(k)) {
+    const n = /\d/.test(k) ? +k - 1 : k.charCodeAt(0) - 97;
+    b = document.querySelectorAll('.notes3 button')[n] || document.querySelectorAll('.choix button:not([disabled])')[n];
+  }
+  if (b) { e.preventDefault(); b.click(); }
+});
 export function apresRecherche() { const c = document.getElementById('cherche'); if (c && location.hash === '#recherche') c.focus(); }
 
 // ---------- Lexique ----------
