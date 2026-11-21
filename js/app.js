@@ -24,7 +24,7 @@ function render() {
   const vue = Object.hasOwn(VIEWS, v) ? v : 'accueil';
   const enSeance = vue === 'seance' && state.seance && !state.seance.fin;
   document.body.className = enSeance ? 'en-seance' : '';
-  APP.innerHTML = VIEWS[vue](arg) + (enSeance ? '' : barreBas(ONGLET_DE[vue] ?? (vue === 'accueil' ? '' : vue)));
+  APP.innerHTML = VIEWS[vue](arg) + (enSeance ? '' : barreBas(ONGLET_DE[vue] ?? (vue === 'accueil' ? '' : vue), location.hash.slice(1)));
   apresRecherche();
 }
 // Thème : auto (celui du téléphone), clair ou sombre.
@@ -37,10 +37,30 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', applique
 window.addEventListener('refresh', () => { const y = scrollY; render(); scrollTo(0, y); });
 window.addEventListener('hashchange', () => { render(); scrollTo(0, 0); });
 
-function barreBas(actif) {
+// Sur ordinateur, la barre devient un menu à gauche, complété par menuPC() (caché sur téléphone).
+function menuPC(ici) {
+  const nd = dues().length, ne = questionsErreurs().length;
+  const l = (h, i, t, n) => `<a href="#${h}" class="${ici === h ? 'ici' : ''}">${ico(i, 18)}<span>${t}</span>${n ? `<em>${n}</em>` : ''}</a>`;
+  return `<div class="menu-pc">
+    <div class="m-tit">Réviser vite</div>
+    <button data-act="express">${ico('eclair', 18)}<span>Révision express</span></button>
+    ${l('cartes/revoir', 'cartes', 'Cartes à revoir', nd)}
+    ${l('quiz/erreurs', 'erreur', 'Mes erreurs', ne)}
+    <a href="#recherche" class="${ici === 'recherche' ? 'ici' : ''}">${ico('loupe', 18)}<span>Rechercher</span><kbd>Ctrl K</kbd></a>
+    <div class="m-tit">Mon année</div>
+    ${l('moyennes', 'barres', 'Mes moyennes')}
+    ${l('planning', 'calendrier', 'Mon planning')}
+    ${mesEpreuves().includes('grand-oral') ? l('grandoral', 'chrono', 'Grand oral') : ''}
+    ${l('jourj', 'ok', 'Le jour J')}
+    <a href="#reglages" class="m-bas ${ici === 'reglages' ? 'ici' : ''}"><span class="m-av">${state.prenom ? esc(state.prenom[0].toUpperCase()) : ico('reglages', 16)}</span><span>${state.prenom ? esc(state.prenom) : 'Réglages'}<small>Réglages</small></span></a>
+  </div>`;
+}
+function barreBas(actif, ici) {
+  // Sur ordinateur, une page du menu de gauche ne doit pas allumer aussi un onglet.
+  if (matchMedia('(min-width: 1000px)').matches && ['cartes/revoir', 'quiz/erreurs', 'recherche', 'moyennes', 'planning', 'grandoral', 'jourj', 'reglages'].includes(ici)) actif = null;
   return `<nav class="tab"><a href="#" class="logo-pc">Objectif <i>X</i></a>${ONGLETS.map(([h, i, t]) => h === 'seance'
     ? `<a href="#seance" class="centre ${actif === 'seance' ? 'on' : ''}" aria-label="Séance">${ico('play', 20)}<span class="lab-pc">${state.seance ? 'Reprendre la séance' : 'Séance du jour'}</span>${state.seance ? '<i class="pastille-s"></i>' : ''}</a>`
-    : `<a href="#${h}" class="${actif === h ? 'on' : ''}">${ico(i)}<span>${t}</span></a>`).join('')}</nav>`;
+    : `<a href="#${h}" class="${actif === h ? 'on' : ''}">${ico(i)}<span>${t}</span></a>`).join('')}${menuPC(ici)}</nav>`;
 }
 
 // Un bouton agit avec data-act ; un champ avec data-in (à chaque frappe) ou data-ch (à la validation).
@@ -77,22 +97,8 @@ VIEWS.accueil = () => {
         <div class="points">${sem.map(c => `<i class="${c}"></i>`).join('')}</div>
         <div class="petit">Cette semaine : ${fait} sur ${pluriel(obj, 'séance', 'séances')}.</div></a>
     </div>
-    ${accesRapides()}
   </div>`;
 };
-// Sur ordinateur seulement (caché sur téléphone par le CSS) : de gros boutons vers ce qui sert le plus.
-function accesRapides() {
-  const ne = questionsErreurs().length, l = [];
-  l.push(`<button data-act="express">${ico('eclair', 22)}<b>Révision express</b><span>10 cartes et 5 questions</span></button>`);
-  l.push(`<a href="#quiz/erreurs">${ico('erreur', 22)}<b>Mes erreurs</b><span>${ne ? pluriel(ne, 'question à refaire', 'questions à refaire') : 'aucune à refaire'}</span></a>`);
-  l.push(`<a href="#recherche">${ico('loupe', 22)}<b>Rechercher</b><span>une notion, un auteur · Ctrl+K</span></a>`);
-  l.push(`<a href="#planning">${ico('calendrier', 22)}<b>Mon planning</b><span>toutes mes séances jusqu’au bac</span></a>`);
-  l.push(`<a href="#moyennes">${ico('barres', 22)}<b>Mes moyennes</b><span>bulletins de terminale</span></a>`);
-  if (mesEpreuves().includes('grand-oral')) l.push(`<a href="#grandoral">${ico('chrono', 22)}<b>Grand oral</b><span>préparer mes questions</span></a>`);
-  l.push(`<a href="#jourj">${ico('ok', 22)}<b>Le jour J</b><span>la liste à préparer</span></a>`);
-  l.push(`<a href="#reglages">${ico('reglages', 22)}<b>Réglages</b><span>matières, jours, sauvegarde</span></a>`);
-  return `<div class="pc-seul"><h2 class="sec">Accès rapides</h2><div class="rapides">${l.join('')}</div></div>`;
-}
 // Les autres comptes à rebours, en petit sous le grand chiffre.
 function comptes() {
   const t = today(), l = [];

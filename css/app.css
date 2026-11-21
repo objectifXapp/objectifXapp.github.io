@@ -128,7 +128,7 @@ button:disabled { opacity: .4; cursor: default; }
 .tab a { color: #8A8894; font: 700 10.5px var(--font); display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; width: 58px; }
 .tab a.on { color: #fff; } .tab a.on:not(.centre)::after { content: ''; position: absolute; bottom: -8px; width: 4px; height: 4px; border-radius: 2px; background: var(--violet); }
 .tab .centre { width: 52px; height: 52px; border-radius: 26px; background: var(--violet); color: #fff; display: grid; place-items: center; box-shadow: 0 6px 16px rgba(115,87,224,.35); }
-.tab .logo-pc, .tab .lab-pc, .pc-seul { display: none; }
+.tab .logo-pc, .tab .lab-pc, .tab .menu-pc { display: none; }
 .pastille-s { position: absolute; top: 2px; right: 2px; width: 10px; height: 10px; border-radius: 5px; background: var(--blanc); border: 2px solid var(--violet); }
 
 /* ---------- Fiche ---------- */
@@ -392,14 +392,23 @@ select.champ { appearance: auto; }
 
   body:not(.bienvenue) .haut .logo { visibility: hidden; }
   .bento { grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  .pc-seul { display: block; }
   .accueil .bento > .case.large:last-child { grid-column: 1 / -1; }
-  .rapides { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  .rapides > * { background: var(--blanc); border: 0; border-radius: 22px; padding: 18px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; color: inherit; font: inherit; cursor: pointer; transition: transform .15s, background .15s; }
-  .rapides > *:hover { transform: translateY(-2px); }
-  .rapides .ico { color: var(--violet); margin-bottom: 10px; }
-  .rapides b { font-size: 15px; }
-  .rapides span { font-size: 13px; opacity: .6; }
+  .tab { overflow-y: auto; scrollbar-width: none; }
+  .tab > a:not(.centre):not(.logo-pc) { padding: 10px 14px; }
+  .tab .logo-pc { padding-bottom: 16px; }
+  .tab .centre { margin-bottom: 8px; }
+  .tab .menu-pc { display: flex; flex-direction: column; gap: 2px; flex: 1; margin-top: 8px; }
+  .menu-pc .m-tit { font: 700 11px var(--font); letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.4); padding: 12px 14px 4px; }
+  .menu-pc > a, .menu-pc > button { display: flex; align-items: center; gap: 12px; padding: 7px 14px; border-radius: 12px; font: 600 14px var(--font); color: rgba(255,255,255,.62); background: none; border: 0; cursor: pointer; text-align: left; width: 100%; }
+  .menu-pc > a:hover, .menu-pc > button:hover { background: rgba(255,255,255,.06); color: #fff; }
+  .menu-pc > a.ici { background: rgba(255,255,255,.1); color: #fff; }
+  .menu-pc .ico { color: var(--violet); opacity: .9; flex: none; }
+  .menu-pc em { margin-left: auto; font: 700 12px var(--font); font-style: normal; background: var(--violet); color: #fff; border-radius: 10px; padding: 2px 8px; }
+  .menu-pc kbd { margin-left: auto; font: 600 11px var(--font); color: rgba(255,255,255,.4); border: 1px solid rgba(255,255,255,.15); border-radius: 6px; padding: 2px 6px; }
+  .menu-pc .m-bas { margin-top: auto; border-top: 1px solid rgba(255,255,255,.08); border-radius: 0; padding-top: 12px; margin-top: auto; }
+  .menu-pc .m-av { width: 32px; height: 32px; border-radius: 16px; background: rgba(255,255,255,.12); color: #fff; display: grid; place-items: center; font-weight: 800; flex: none; }
+  .menu-pc .m-bas > span:last-child { display: flex; flex-direction: column; color: #fff; }
+  .menu-pc .m-bas small { font-size: 12px; color: rgba(255,255,255,.45); font-weight: 500; }
   .liste { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .outils { grid-template-columns: repeat(4, 1fr); }
   .page:has(.flash), .page:has(.choix), .page:has(.fiche) { max-width: 860px; }
